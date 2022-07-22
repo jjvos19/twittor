@@ -6,6 +6,8 @@ import (
 	"os"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
+	"github.com/jjvos19/twittor/middlew"
+	"github.com/jjvos19/twittor/routers"
 )
 
 /*
@@ -14,7 +16,10 @@ import (
 func Manejadores() {
 	router := mux.NewRouter()
 
-	PORT := os.Getenv("PORT_TWITTOR")
+	// Adicion de los endpoints
+	router.HandleFunc("/registro", middlew.ChequeoBD(routers.Registro)).Methods("POST")
+
+	Port := os.Getenv("PORT_TWITTOR")
 	if PORT == "" {
 		PORT = "8080"
 	}
