@@ -11,8 +11,8 @@ import (
 /*
    MongoCN es el objeto de coneccion a la base de datos.
  */
-var MongoCN = conectarBD()
-var clientOptions = optinos.Client().ApplyURI("mongodb+srv://twittor:twittor2022@program.nr0u1.mongodb.net/test")
+var MongoCN = ConectarBD()
+var clientOptions = options.Client().ApplyURI("mongodb+srv://twittor:twittor2022@program.nr0u1.mongodb.net/test")
 
 /*
    ConectarBD es la funcion que me permite conectar con la BD
@@ -30,7 +30,7 @@ func ConectarBD() *mongo.Client {
 		return client
 	}
 
-	log.Printfln("Conexion Exitosa con la DB")
+	log.Println("Conexion Exitosa con la DB")
 	return client
 }
 
