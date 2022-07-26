@@ -19,7 +19,7 @@ func Manejadores() {
 	// Adicion de los endpoints
 	router.HandleFunc("/registro", middlew.ChequeoBD(routers.Registro)).Methods("POST")
 
-	Port := os.Getenv("PORT_TWITTOR")
+	PORT := os.Getenv("PORT_TWITTOR")
 	if PORT == "" {
 		PORT = "8080"
 	}
