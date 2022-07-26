@@ -18,6 +18,11 @@ func Manejadores() {
 
 	// Adicion de los endpoints
 	router.HandleFunc("/registro", middlew.ChequeoBD(routers.Registro)).Methods("POST")
+	// Adicion del endpoint para login
+	router.HandleFunc("/login", middlew.ChequeoBD(routers.Login)).Methods("POST")
+	// Adicion del endpoint para verPerfil
+	router.HandleFunc("/verperfil", middlew.ChequeoBD(middlew.ValidoJWT(routers.verPerfil))).Methods("GET")
+	
 
 	PORT := os.Getenv("PORT_TWITTOR")
 	if PORT == "" {

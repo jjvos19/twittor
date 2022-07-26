@@ -13,13 +13,13 @@ import (
    Login, realiza el login.
 */
 func Login(w http.ResponseWriter, r *http.Request) {
-	w.Header().add("content-type", "application/json")
+	w.Header().Add("content-type", "application/json")
 
 	var t models.Usuario
 
 	err := json.NewDecoder(r.Body).Decode(&t)
 	if err != nil {
-		http.Error(w, "Usuario y/o Contraseña invalidos " + err.Error(), 400)
+		http.Error(w, "Usuario y/o ContraseÃ±a invalidos " + err.Error(), 400)
 		return
 	}
 	if len(t.Email) == 0 {
@@ -29,7 +29,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	documento, existe := bd.IntentoLogin(t.Email, t.Password)
 	if !existe {
-		http.Error(w, "Usuario y/o Contraseña invalidos", 400)
+		http.Error(w, "Usuario y/o ContraseÃ±a invalidos", 400)
 		return
 	}
 
@@ -40,7 +40,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	resp := models.RespuestaLogin {
-		Token: jwtKey
+		Token: jwtKey,
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
@@ -51,6 +51,6 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	http.SetCookie(w, &http.Cookie{
 		Name: "token",
 		Value: jwtKey,
-		Expires: expirationTime.
+		Expires: expirationTime,
 	})
 }
