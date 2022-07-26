@@ -33,5 +33,24 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	
+	jwtKey, err := jwt.GeneroJWT(documento)
+	if err != nil {
+		http.Error(w, "Ocurrio un error al intentar generar el Token correspondiente " +err.Error(), 400)
+		return
+	}
+
+	resp := models.RespuestaLogin {
+		Token: jwtKey
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(resp)
+
+	expirationTime := time.Now().Add(24 * time.Hour)
+	// Setear una cookie desde GO
+	http.SetCookie(w, &http.Cookie{
+		Name: "token",
+		Value: jwtKey,
+		Expires: expirationTime.
+	})
 }
