@@ -8,7 +8,7 @@ import (
 /*
    Usuario es un modelo de usuario para la base de Mongo
  */
-type usuario struct {
+type Usuario struct {
 	ID              primitive.ObjectID `bson:"_id,omitempty" json:"id"`
 	Nombre          string             `bson:"nombre" json:"nombre,omitempty"`
 	Apellidos       string             `bson:"apellidos" json:"apellidos,omitempty"`
