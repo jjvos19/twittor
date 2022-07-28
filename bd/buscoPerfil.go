@@ -7,6 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
+	"log"
 )
 
 /*
@@ -14,18 +15,29 @@ import (
 */
 func BuscoPerfil(ID string) (models.Usuario, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second * 15)
-	db := MongoCN.Database("twittors")
+	defer cancel()
+	
+	db := MongoCN.Database("twittor")
 	col := db.Collection("usuarios")
-	fmt.Println(cancel)
-
+	
 	var perfil models.Usuario
 
-	objID, _ := primitive.ObjectIDFromHex(ID)
+	objID, err := primitive.ObjectIDFromHex(ID)
+
+	if err != nil {
+	
+		log.Print("-----> error al convertir el ID " + err.Error())
+		//fmt.Println("No se puede convertir el ID " + opcion)
+		return perfil, err
+	}
+	
+	log.Print("ID: " + ID + "\n objID: ")
+	log.Println(objID)
 	condicion := bson.M{
 		"_id": objID,
 	}
 
-	err := col.FindOne(ctx, condicion).Decode(&perfil)
+	err = col.FindOne(ctx, condicion).Decode(&perfil)
 	perfil.Password = ""
 	if err != nil {
 		fmt.Println("Registro no encontado " + err.Error())
