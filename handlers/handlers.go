@@ -22,7 +22,8 @@ func Manejadores() {
 	router.HandleFunc("/login", middlew.ChequeoBD(routers.Login)).Methods("POST")
 	// Adicion del endpoint para verPerfil
 	router.HandleFunc("/verperfil", middlew.ChequeoBD(middlew.ValidoJWT(routers.VerPerfil))).Methods("GET")
-	
+	// Adicion del endpoint para modificar perfil
+	router.HandleFunc("/modificarPerfil", middlew.ChequeoBD(middlew.ValidoJWT(routers.ModificarPerfil))).Methods("PUT")
 
 	PORT := os.Getenv("PORT_TWITTOR")
 	if PORT == "" {
